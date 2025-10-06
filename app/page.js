@@ -179,7 +179,7 @@ export default function Home() {
               value={qrValue}
               onChange={(e) => setQrValue(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="https://example.com"
+              placeholder="https://pantaleone.net?utm_source=qrcode&utm_medium=qr&utm_id=main-qr"
             />
           </div>
 
@@ -243,7 +243,7 @@ export default function Home() {
 
         {/* Preview */}
         <div className="mt-10 flex flex-col items-center space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex justify-center items-center">
+          <div className="bg-white p-1 rounded-2xl border border-gray-200 shadow-sm flex justify-center items-center">
             <div ref={wrapperRef} style={{ display: 'none' }}>
               <QRCodeCanvas
                 value={normalizeUrl(qrValue)}
@@ -372,7 +372,7 @@ export default function Home() {
 
 
       <footer className="mt-12 text-center text-sm text-gray-500">
-        Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15 & qrcode.react
+        Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15, Tailwind CSS & qrcode.react
       </footer>
     </main>
   );
