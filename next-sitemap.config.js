@@ -1,7 +1,33 @@
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'http://localhost:3000',
+  siteUrl: process.env.SITE_URL || 'https://pantaleone.net',
   generateRobotsTxt: true,
-  changefreq: 'monthly',
-  priority: 0.7,
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: '*',
+        allow: '/',
+      },
+    ],
+  },
+  changefreq: 'weekly',
+  priority: 1.0,
   sitemapSize: 5000,
+  additionalPaths: async (config) => {
+    return [
+      {
+        loc: '/',
+        changefreq: 'weekly',
+        priority: 1.0,
+        lastmod: new Date().toISOString(),
+      },
+    ];
+  },
+  transform: async (config, path) => {
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority: config.priority,
+      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+    };
+  },
 }
