@@ -55,7 +55,7 @@ const drawLogo = (ctx, centerX, centerY, logoSize) => {
 };
 
 export default function Home() {
-  const [qrValue, setQrValue] = useState("https://pantaleone.net");
+  const [qrValue, setQrValue] = useState("https://pantaleone.net?utm_source=qrcode&utm_medium=qr&utm_id=main-qr");
   const [qrSize, setQrSize] = useState(200);
   const [qrColor, setQrColor] = useState("#000000");
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
@@ -279,6 +279,55 @@ export default function Home() {
       {/* Customization Features Section */}
       <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
         <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+          How to Properly Encode URLs for Google Analytics Tracking
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Understanding UTM Parameters
+            </h3>
+            <p className="text-gray-600 mb-4">
+              UTM parameters are tags added to your URLs to track the performance of campaigns in Google Analytics. They help identify the source, medium, and other details of your traffic, ensuring accurate attribution and insights.
+            </p>
+            <ul className="list-disc list-inside text-gray-600 space-y-1">
+              <li><strong>utm_source</strong>: Required - Identifies the traffic source (e.g., google, newsletter).</li>
+              <li><strong>utm_medium</strong>: Required - Specifies the marketing medium (e.g., cpc, email, social).</li>
+              <li><strong>utm_campaign</strong>: Required - Names the specific campaign (e.g., summer_sale).</li>
+              <li><strong>utm_term</strong>: Optional - Tracks paid search keywords.</li>
+              <li><strong>utm_content</strong>: Optional - Differentiates similar content or ads (e.g., banner_ad1).</li>
+              <li><strong>utm_id</strong>: Optional for GA4 - Unique campaign ID for advanced tracking.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Step-by-Step Guide to Encoding URLs
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Use Google's Campaign URL Builder or manually add parameters to create trackable URLs. Always URL-encode special characters (e.g., spaces as %20) to avoid errors and ensure compatibility across platforms.
+            </p>
+            <ul className="list-disc list-inside text-gray-600 space-y-1">
+              <li>Enter your base website URL (e.g., https://example.com).</li>
+              <li>Fill in required UTM parameters: source, medium, and campaign.</li>
+              <li>Add optional parameters like term or content if needed.</li>
+              <li>Generate the tagged URL and test it in your browser.</li>
+              <li>Use consistent lowercase naming for accurate reporting.</li>
+              <li>Encode the full URL if embedding in QR codes or emails.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-lg font-medium text-gray-700">
+            Ideal for marketers and businesses to track campaign effectiveness with precision, especially when using custom QR codes for seamless user experiences.
+          </p>
+        </div>
+      </section>
+
+            {/* Customization Features Section */}
+      <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
+        <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
           Why Choose Our Free Custom QR Code Generator?
         </h2>
 
@@ -320,6 +369,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+
 
       <footer className="mt-12 text-center text-sm text-gray-500">
         Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15 & qrcode.react
