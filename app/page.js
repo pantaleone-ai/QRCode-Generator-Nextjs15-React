@@ -235,7 +235,7 @@ export default function Home() {
 
         {/* Preview */}
         <div className="mt-10 flex flex-col items-center space-y-6">
-          <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+          <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex justify-center items-center">
             <div ref={wrapperRef} style={{ display: 'none' }}>
               <QRCodeCanvas
                 value={normalizeUrl(qrValue)}
