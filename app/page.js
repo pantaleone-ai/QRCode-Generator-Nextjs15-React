@@ -89,7 +89,7 @@ export default function Home() {
     <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col items-center justify-center p-6">
       <div className="bg-white shadow-xl rounded-3xl p-10 w-full max-w-2xl border border-gray-100" role="main">
         <h1 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Free QR Code Generator
+          Free QR Code Generator from Pantaleone.net
         </h1>
 
         {/* QR Input */}
@@ -199,8 +199,53 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Customization Features Section */}
+      <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
+        <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+          Why Choose Our Free Custom QR Code Generator?
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Effortless Customization Options
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Create <strong>custom QR codes</strong> tailored to your needs with our intuitive interface. Choose from a wide range of sizes, colors, and error correction levels to match your brand identity or personal style.
+            </p>
+            <ul className="list-disc list-inside text-gray-600 space-y-1">
+              <li>Adjustable QR code size from 100x100 to 600x600 pixels</li>
+              <li>Customizable foreground and background colors</li>
+              <li>Four error correction levels (L, M, Q, H) for reliability</li>
+              <li>Real-time preview of your <strong>custom QR codes</strong></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Simple and Fast Creation Process
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Generate professional <strong>QR codes</strong> in seconds with our user-friendly tool. No registration required - just enter your text or URL and start customizing immediately.
+            </p>
+            <ul className="list-disc list-inside text-gray-600 space-y-1">
+              <li>Instant QR code generation</li>
+              <li>URL normalization for seamless linking</li>
+              <li>High-quality PNG export for all devices</li>
+              <li>Copy to clipboard functionality for easy sharing</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <p className="text-lg font-medium text-gray-700">
+            Perfect for businesses, marketers, and individuals looking to create <strong>easy custom QR codes</strong> that work everywhere.
+          </p>
+        </div>
+      </section>
+
       <footer className="mt-12 text-center text-sm text-gray-500">
-        Built with ❤️ by Pantaleone • Powered by Next.js 15 & qrcode.react
+        Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15 & qrcode.react
       </footer>
     </main>
   );
