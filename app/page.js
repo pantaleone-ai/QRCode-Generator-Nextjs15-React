@@ -1,8 +1,10 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useState, useRef, useEffect } from "react";
-import { QRCodeCanvas } from "qrcode.react"; // ✅ direct import – no dynamic()
 import { Download, Copy } from "lucide-react";
+
+const QRCodeCanvas = dynamic(() => import('qrcode.react').then(mod => mod.QRCodeCanvas), { ssr: false });
 
 // ✅ Normalize URLs (adds https:// if missing)
 const normalizeUrl = (input) => {
@@ -68,19 +70,25 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const qrCanvas = getCanvas();
-    const previewCanvas = previewCanvasRef.current;
-    if (!qrCanvas || !previewCanvas) return;
+    const draw = () => {
+      const qrCanvas = getCanvas();
+      const previewCanvas = previewCanvasRef.current;
+      if (!qrCanvas || !previewCanvas) {
+        setTimeout(draw, 50);
+        return;
+      }
 
-    const ctx = previewCanvas.getContext('2d');
-    ctx.fillStyle = qrBgColor || "#ffffff";
-    ctx.fillRect(0, 0, qrSize, qrSize);
-    ctx.drawImage(qrCanvas, 0, 0);
+      const ctx = previewCanvas.getContext('2d');
+      ctx.fillStyle = qrBgColor || "#ffffff";
+      ctx.fillRect(0, 0, qrSize, qrSize);
+      ctx.drawImage(qrCanvas, 0, 0);
 
-    const logoSize = Math.min(qrSize * 0.2, 40);
-    const centerX = qrSize / 2;
-    const centerY = qrSize / 2;
-    drawLogo(ctx, centerX, centerY, logoSize);
+      const logoSize = Math.min(qrSize * 0.1, 25);
+      const centerX = qrSize / 2;
+      const centerY = qrSize / 2;
+      drawLogo(ctx, centerX, centerY, logoSize);
+    };
+    draw();
   }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel]);
 
   const handleDownloadQR = async () => {
@@ -99,7 +107,7 @@ export default function Home() {
       ctx.drawImage(canvas, 0, 0);
 
       // Draw logo overlay
-      const logoSize = Math.min(qrSize * 0.2, 40); // 20% of QR size or max 40px
+      const logoSize = Math.min(qrSize * 0.1, 25); // 10% of QR size or max 25px
       const centerX = exportCanvas.width / 2;
       const centerY = exportCanvas.height / 2;
       drawLogo(ctx, centerX, centerY, logoSize);
@@ -133,7 +141,7 @@ export default function Home() {
       ctx.drawImage(canvas, 0, 0);
 
       // Draw logo overlay
-      const logoSize = Math.min(qrSize * 0.2, 40); // 20% of QR size or max 40px
+      const logoSize = Math.min(qrSize * 0.1, 25); // 10% of QR size or max 25px
       const centerX = exportCanvas.width / 2;
       const centerY = exportCanvas.height / 2;
       drawLogo(ctx, centerX, centerY, logoSize);
