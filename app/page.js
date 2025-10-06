@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { QRCodeCanvas } from "qrcode.react"; // ✅ direct import – no dynamic()
 import { Download, Copy } from "lucide-react";
 
@@ -13,6 +13,45 @@ const normalizeUrl = (input) => {
   return input;
 };
 
+// Function to draw rounded rectangle
+const drawRoundedRect = (ctx, x, y, width, height, radius) => {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+};
+
+// Function to draw the logo
+const drawLogo = (ctx, centerX, centerY, logoSize) => {
+  const padding = logoSize * 0.1; // white border thickness
+  const borderRadius = logoSize * 0.2;
+
+  // White border
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = padding;
+  drawRoundedRect(ctx, centerX - logoSize/2 - padding/2, centerY - logoSize/2 - padding/2, logoSize + padding, logoSize + padding, borderRadius + padding/2);
+  ctx.stroke();
+
+  // Black background
+  ctx.fillStyle = '#000000';
+  drawRoundedRect(ctx, centerX - logoSize/2, centerY - logoSize/2, logoSize, logoSize, borderRadius);
+  ctx.fill();
+
+  // White "P"
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `bold ${logoSize * 0.6}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('P', centerX, centerY - logoSize * 0.05); // slight adjustment for baseline
+};
+
 export default function Home() {
   const [qrValue, setQrValue] = useState("https://pantaleone.net");
   const [qrSize, setQrSize] = useState(200);
@@ -21,11 +60,28 @@ export default function Home() {
   const [qrLevel, setQrLevel] = useState("H");
 
   const wrapperRef = useRef(null);
+  const previewCanvasRef = useRef(null);
 
   const getCanvas = () => {
     if (!wrapperRef.current) return null;
     return wrapperRef.current.querySelector("canvas");
   };
+
+  useEffect(() => {
+    const qrCanvas = getCanvas();
+    const previewCanvas = previewCanvasRef.current;
+    if (!qrCanvas || !previewCanvas) return;
+
+    const ctx = previewCanvas.getContext('2d');
+    ctx.fillStyle = qrBgColor || "#ffffff";
+    ctx.fillRect(0, 0, qrSize, qrSize);
+    ctx.drawImage(qrCanvas, 0, 0);
+
+    const logoSize = Math.min(qrSize * 0.2, 40);
+    const centerX = qrSize / 2;
+    const centerY = qrSize / 2;
+    drawLogo(ctx, centerX, centerY, logoSize);
+  }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel]);
 
   const handleDownloadQR = async () => {
     try {
@@ -41,6 +97,12 @@ export default function Home() {
       ctx.fillStyle = qrBgColor || "#ffffff";
       ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
       ctx.drawImage(canvas, 0, 0);
+
+      // Draw logo overlay
+      const logoSize = Math.min(qrSize * 0.2, 40); // 20% of QR size or max 40px
+      const centerX = exportCanvas.width / 2;
+      const centerY = exportCanvas.height / 2;
+      drawLogo(ctx, centerX, centerY, logoSize);
 
       const pngUrl = exportCanvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -69,6 +131,12 @@ export default function Home() {
       ctx.fillStyle = qrBgColor || "#ffffff";
       ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
       ctx.drawImage(canvas, 0, 0);
+
+      // Draw logo overlay
+      const logoSize = Math.min(qrSize * 0.2, 40); // 20% of QR size or max 40px
+      const centerX = exportCanvas.width / 2;
+      const centerY = exportCanvas.height / 2;
+      drawLogo(ctx, centerX, centerY, logoSize);
 
       if (!navigator.clipboard) throw new Error("Clipboard API unavailable.");
 
@@ -168,7 +236,7 @@ export default function Home() {
         {/* Preview */}
         <div className="mt-10 flex flex-col items-center space-y-6">
           <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-            <div ref={wrapperRef}>
+            <div ref={wrapperRef} style={{ display: 'none' }}>
               <QRCodeCanvas
                 value={normalizeUrl(qrValue)}
                 size={qrSize}
@@ -178,6 +246,7 @@ export default function Home() {
                 includeMargin={true}
               />
             </div>
+            <canvas ref={previewCanvasRef} width={qrSize} height={qrSize} />
           </div>
 
           <div className="flex gap-4">
