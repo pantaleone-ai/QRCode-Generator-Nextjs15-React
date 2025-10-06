@@ -60,16 +60,12 @@ export default function Home() {
   const [qrColor, setQrColor] = useState("#000000");
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
   const [qrLevel, setQrLevel] = useState("H");
-  const [dpr, setDpr] = useState(1);
+
+  const dpr = typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1;
+  const internalSize = Math.round(qrSize * dpr);
 
   const wrapperRef = useRef(null);
   const previewCanvasRef = useRef(null);
-
-  useEffect(() => {
-    setDpr(window.devicePixelRatio || 1);
-  }, []);
-
-  const internalSize = Math.round(qrSize * dpr);
 
   const getCanvas = () => {
     if (!wrapperRef.current) return null;
@@ -104,7 +100,7 @@ export default function Home() {
       drawLogo(ctx, centerX, centerY, logoSize);
     };
     draw();
-  }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel, dpr]);
+  }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel]);
 
   const handleDownloadQR = async () => {
     try {
@@ -261,7 +257,10 @@ export default function Home() {
 
         {/* Preview */}
         <div className="mt-10 flex flex-col items-center space-y-6">
-          <div className="bg-white p-1 rounded-2xl border border-gray-200 shadow-sm flex justify-center items-center">
+          <div 
+            className="bg-white p-1 rounded-2xl border border-gray-200 shadow-sm flex justify-center items-center"
+            style={{ width: `${qrSize + 8}px`, height: `${qrSize + 8}px` }}
+          >
             <div ref={wrapperRef} style={{ display: 'none' }}>
               <QRCodeCanvas
                 value={normalizeUrl(qrValue)}
@@ -276,7 +275,8 @@ export default function Home() {
               ref={previewCanvasRef} 
               width={internalSize} 
               height={internalSize} 
-              style={{ width: `${qrSize}px`, height: `${qrSize}px` }} 
+              style={{ width: `${qrSize}px !important`, height: `${qrSize}px !important` }} 
+              className="max-w-none"
             />
           </div>
 
@@ -392,6 +392,7 @@ export default function Home() {
           </p>
         </div>
       </section>
+
 
       <footer className="mt-12 text-center text-sm text-gray-500">
         Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15, Tailwind CSS & qrcode.react
