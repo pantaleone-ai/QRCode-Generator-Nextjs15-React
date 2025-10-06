@@ -60,9 +60,16 @@ export default function Home() {
   const [qrColor, setQrColor] = useState("#000000");
   const [qrBgColor, setQrBgColor] = useState("#ffffff");
   const [qrLevel, setQrLevel] = useState("H");
+  const [dpr, setDpr] = useState(1);
 
   const wrapperRef = useRef(null);
   const previewCanvasRef = useRef(null);
+
+  useEffect(() => {
+    setDpr(window.devicePixelRatio || 1);
+  }, []);
+
+  const internalSize = Math.round(qrSize * dpr);
 
   const getCanvas = () => {
     if (!wrapperRef.current) return null;
@@ -78,18 +85,26 @@ export default function Home() {
         return;
       }
 
+      // Check if QR canvas is ready (not empty/transparent)
+      const qrCtx = qrCanvas.getContext('2d');
+      const imageData = qrCtx.getImageData(0, 0, 1, 1).data;
+      if (imageData[3] === 0) {  // If alpha is 0 (transparent), retry
+        setTimeout(draw, 50);
+        return;
+      }
+
       const ctx = previewCanvas.getContext('2d');
       ctx.fillStyle = qrBgColor || "#ffffff";
-      ctx.fillRect(0, 0, qrSize, qrSize);
+      ctx.fillRect(0, 0, internalSize, internalSize);
       ctx.drawImage(qrCanvas, 0, 0);
 
-      const logoSize = Math.min(qrSize * 0.1, 25);
-      const centerX = qrSize / 2;
-      const centerY = qrSize / 2;
+      const logoSize = Math.min(qrSize * 0.1 * dpr, 25 * dpr);
+      const centerX = internalSize / 2;
+      const centerY = internalSize / 2;
       drawLogo(ctx, centerX, centerY, logoSize);
     };
     draw();
-  }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel]);
+  }, [qrValue, qrSize, qrColor, qrBgColor, qrLevel, dpr]);
 
   const handleDownloadQR = async () => {
     try {
@@ -97,8 +112,8 @@ export default function Home() {
       if (!canvas) throw new Error("QR canvas not found.");
 
       const exportCanvas = document.createElement("canvas");
-      exportCanvas.width = canvas.width;
-      exportCanvas.height = canvas.height;
+      exportCanvas.width = internalSize;
+      exportCanvas.height = internalSize;
       const ctx = exportCanvas.getContext("2d");
       if (!ctx) throw new Error("Unable to create canvas context.");
 
@@ -107,7 +122,7 @@ export default function Home() {
       ctx.drawImage(canvas, 0, 0);
 
       // Draw logo overlay
-      const logoSize = Math.min(qrSize * 0.1, 25); // 10% of QR size or max 25px
+      const logoSize = Math.min(qrSize * 0.1 * dpr, 25 * dpr); // Scale with DPR
       const centerX = exportCanvas.width / 2;
       const centerY = exportCanvas.height / 2;
       drawLogo(ctx, centerX, centerY, logoSize);
@@ -131,8 +146,8 @@ export default function Home() {
       if (!canvas) throw new Error("QR canvas not found.");
 
       const exportCanvas = document.createElement("canvas");
-      exportCanvas.width = canvas.width;
-      exportCanvas.height = canvas.height;
+      exportCanvas.width = internalSize;
+      exportCanvas.height = internalSize;
       const ctx = exportCanvas.getContext("2d");
       if (!ctx) throw new Error("Unable to create canvas context.");
 
@@ -141,7 +156,7 @@ export default function Home() {
       ctx.drawImage(canvas, 0, 0);
 
       // Draw logo overlay
-      const logoSize = Math.min(qrSize * 0.1, 25); // 10% of QR size or max 25px
+      const logoSize = Math.min(qrSize * 0.1 * dpr, 25 * dpr); // Scale with DPR
       const centerX = exportCanvas.width / 2;
       const centerY = exportCanvas.height / 2;
       drawLogo(ctx, centerX, centerY, logoSize);
@@ -193,7 +208,10 @@ export default function Home() {
                 value={qrSize}
                 min={100}
                 max={600}
-                onChange={(e) => setQrSize(Number(e.target.value))}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setQrSize(Math.min(Math.max(value, 100), 600));
+                }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />
             </div>
@@ -247,14 +265,19 @@ export default function Home() {
             <div ref={wrapperRef} style={{ display: 'none' }}>
               <QRCodeCanvas
                 value={normalizeUrl(qrValue)}
-                size={qrSize}
+                size={internalSize}
                 bgColor={qrBgColor}
                 fgColor={qrColor}
                 level={qrLevel}
                 includeMargin={true}
               />
             </div>
-            <canvas ref={previewCanvasRef} width={qrSize} height={qrSize} />
+            <canvas 
+              ref={previewCanvasRef} 
+              width={internalSize} 
+              height={internalSize} 
+              style={{ width: `${qrSize}px`, height: `${qrSize}px` }} 
+            />
           </div>
 
           <div className="flex gap-4">
@@ -325,7 +348,7 @@ export default function Home() {
         </div>
       </section>
 
-            {/* Customization Features Section */}
+      {/* Customization Features Section */}
       <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
         <h2 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
           Why Choose Our Free Custom QR Code Generator?
@@ -369,7 +392,6 @@ export default function Home() {
           </p>
         </div>
       </section>
-
 
       <footer className="mt-12 text-center text-sm text-gray-500">
         Built with ❤️ by <a href="https://pantaleone.net" target="_blank">Pantaleone.net</a> • Powered by Next.js 15, Tailwind CSS & qrcode.react
