@@ -8,8 +8,6 @@ A feature-rich, high-performance QR code generator built with the latest web tec
 
 ### [➡️ View the Live Demo](https://qr-generator-pantaleone.vercel.app/)
 
-![Screenshot of the QR Code Generator App](https://raw.githubusercontent.com/pantaleone-ai/qrgen-main/main/public/qr-code-generator-pantaleone.jpg)
-
 ---
 
 ## ✨ Key Features
@@ -92,6 +90,12 @@ You can easily run this project on your local machine for development and testin
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ---
+
+![Screenshot of the QR Code Generator App|400x750,100%](https://pantaleone-net.s3.us-west-1.amazonaws.com/qr1.webp)
+
+![Screenshot of the QR Code Generator App|400x750,100%](https://pantaleone-net.s3.us-west-1.amazonaws.com/qr2.webp)
+
+![Screenshot of the QR Code Generator App|400x750,100%](https://pantaleone-net.s3.us-west-1.amazonaws.com/qr3.webp)
 
 ## 🤝 Contributing
 
