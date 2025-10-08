@@ -250,10 +250,10 @@ export default function Home() {
                 </a>
             </footer>
 
-            {/* --- NEW: Toast Notification Component --- */}
-            <div className={`fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg transition-transform duration-300 ${toast.show ? 'translate-x-0' : 'translate-x-[120%]'}`}>
-                {toast.message}
-            </div>
+     
+            // <div className={`fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg transition-transform duration-300 ${toast.show ? 'translate-x-0' : 'translate-x-[120%]'}`}>
+            //     {toast.message}
+            // </div>
         </main>
     );
 }
