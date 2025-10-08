@@ -135,7 +135,7 @@ export default function Home() {
         <main className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col items-center justify-center p-4 sm:p-6">
             <div className="bg-white shadow-xl rounded-3xl p-6 sm:p-10 w-full max-w-2xl border border-gray-100" role="main">
                 <h1 className="text-3xl sm:text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Free QR Code Generator
+                    Free Custom QR Code Generator from Pantaleone.net
                 </h1>
 
                 <div className="space-y-4">
