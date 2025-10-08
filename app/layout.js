@@ -2,7 +2,7 @@ import './globals.css'
 import Script from 'next/script'
 
 export const metadata = {
-  metadataBase: new URL('https://pantaleone.net'),
+  metadataBase: new URL('https://qr-generator-pantaleone.vercel.app/'),
   title: {
     default: 'Free QR Code Generator | Create QR Codes Instantly',
     template: '%s | QRGen'
@@ -27,13 +27,13 @@ export const metadata = {
     title: 'Free QR Code Generator | Create QR Codes Instantly',
     description: 'Generate free QR codes online for URLs, text, and more. Customizable colors, sizes, and error correction levels. Download in high quality PNG format.',
     url: 'https://pantaleone.net',
-    siteName: 'QRGen',
+    siteName: 'QRGen - Free QR Code Generator',
     type: 'website',
     images: [
       {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
+        url: '/og-image.png',
+        width: 512,
+        height: 512,
         alt: 'QR Code Generator Tool',
       },
     ],
@@ -42,16 +42,12 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Free QR Code Generator | Create QR Codes Instantly',
     description: 'Generate free QR codes online for URLs, text, and more. Customizable colors, sizes, and error correction levels.',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.png'],
   },
   icons: {
     icon: [{ url: '/favicon.ico' }, { url: '/icon.svg', type: 'image/svg+xml' }],
     shortcut: ['/favicon.ico'],
     apple: [{ url: '/apple-touch-icon.png' }],
-  },
-  manifest: '/manifest.json',
-  verification: {
-    google: 'your-google-site-verification-code',
   },
   alternates: {
     canonical: '/',
