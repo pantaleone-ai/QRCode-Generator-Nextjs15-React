@@ -1,0 +1,34 @@
+# Free QR Code Generator
+
+> A fast, privacy-focused tool for generating custom static QR codes instantly.
+
+This utility allows users to generate high-resolution QR codes from URLs or plain text with real-time previews and customization options.
+
+## Features
+
+- **Real-time Generation**: QR codes update instantly as the user types.
+- **Customization**:
+    - Adjustable dimensions (Size in pixels).
+    - Custom Foreground and Background colors.
+    - Selectable Error Correction Levels (Low, Medium, Quartile, High).
+- **Export Options**: 
+    - Download as high-resolution PNG.
+    - Copy to clipboard for immediate use.
+- **Static Codes**: Generated codes never expire as they encode data directly into the pattern.
+
+## Usage Guide
+
+1. **Input**: Enter any URL or text string.
+2. **Design**: Adjust colors and sizing to match branding requirements.
+3. **Redundancy**: Use "High" error correction for codes printed on surfaces that might get damaged or for complex environments.
+4. **Tracking**: To track scans, users should input a URL containing UTM parameters or a shortened link (e.g., Bitly).
+
+## Technical Specifications
+
+- **Type**: Static QR Code Generator (No backend tracking/redirects).
+- **Privacy**: No tracking or data collection on the input provided.
+- **Cost**: 100% free with no usage limits or subscriptions.
+
+## About
+Built by Pantaleone.net.
+URL: https://qr-generator-pantaleone.vercel.app/
