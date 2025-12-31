@@ -191,40 +191,83 @@ export default function Home() {
                 </div>
             </div>
             
-            {/* --- NEW: SEO Content and Feature Sections --- */}
+               {/* --- NEW: Keyword-Rich Intro Section --- */}
+            <section className="mt-8 text-center w-full max-w-4xl">
+                <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Free QR Code Generator | Create Custom QR Codes Instantly</h1>
+                <p className="text-gray-600 text-lg mb-6">Our free QR code generator lets you create custom QR codes online with logos, colors, and high error correction. Perfect for websites, business cards, Wi-Fi sharing, and more. No sign-up required—generate static QR codes that never expire.</p>
+            </section>
+
+            {/* --- UPDATED: How It Works with More Details --- */}
             <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
-                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">How It Works</h2>
+                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">How to Use Our Free QR Code Generator</h2>
                 <div className="grid md:grid-cols-3 gap-8 text-center">
                     <div>
                         <div className="flex justify-center items-center mb-4 bg-blue-100 text-blue-600 rounded-full w-16 h-16 mx-auto"><span className="text-2xl font-bold">1</span></div>
-                        <h3 className="text-xl font-semibold mb-2">Enter Content</h3>
-                        <p className="text-gray-600">Enter any URL or text into the input field. The QR code will instantly update.</p>
+                        <h3 className="text-xl font-semibold mb-2">Enter Your Content</h3>
+                        <p className="text-gray-600">Simply input a URL, text, or any data into the field. Our custom QR code maker automatically normalizes URLs and updates the preview in real-time. Ideal for creating QR codes for websites or links.</p>
                     </div>
                     <div>
                         <div className="flex justify-center items-center mb-4 bg-purple-100 text-purple-600 rounded-full w-16 h-16 mx-auto"><span className="text-2xl font-bold">2</span></div>
-                        <h3 className="text-xl font-semibold mb-2">Customize</h3>
-                        <p className="text-gray-600">Change the size, colors, and error correction level to match your style.</p>
+                        <h3 className="text-xl font-semibold mb-2">Customize Your QR Code</h3>
+                        <p className="text-gray-600">Adjust the size (up to 1024px), foreground and background colors, and error correction level to fit your branding. Add our custom logo for a professional touch with this free QR code creator.</p>
                     </div>
                     <div>
                         <div className="flex justify-center items-center mb-4 bg-green-100 text-green-600 rounded-full w-16 h-16 mx-auto"><span className="text-2xl font-bold">3</span></div>
-                        <h3 className="text-xl font-semibold mb-2">Download & Share</h3>
-                        <p className="text-gray-600">Download a high-resolution PNG or copy it to your clipboard for immediate use.</p>
+                        <h3 className="text-xl font-semibold mb-2">Download or Share</h3>
+                        <p className="text-gray-600">Get a high-resolution PNG download or copy to clipboard. Share your custom QR code easily for marketing, events, or personal use.</p>
                     </div>
                 </div>
             </section>
-            
+
+            {/* --- NEW: Benefits Section --- */}
             <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
-                 <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Common Use Cases</h2>
+                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Why Choose Our Free Custom QR Code Maker?</h2>
+                <ul className="space-y-4 text-gray-600">
+                    <li><strong>Completely Free:</strong> No ads, limits, or watermarks—unlike other QR code generators.</li>
+                    <li><strong>Custom Branding:</strong> Add logos and colors to make your QR code unique.</li>
+                    <li><strong>High Reliability:</strong> Fixed high error correction ensures scans work even if damaged.</li>
+                    <li><strong>Instant Generation:</strong> Create QR codes online free in seconds, no software needed.</li>
+                    <li><strong>SEO-Friendly:</strong> Optimized for searches like "best free QR code generator with logo".</li>
+                </ul>
+            </section>
+
+            {/* --- UPDATED: Common Use Cases with Details --- */}
+            <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
+                 <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Common Use Cases for QR Codes</h2>
                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                    <div className="p-4 rounded-lg bg-slate-50"><Wifi className="mx-auto mb-2 text-blue-500" size={32}/><h3 className="font-semibold">Share Wi-Fi</h3></div>
-                    <div className="p-4 rounded-lg bg-slate-50"><ShoppingCart className="mx-auto mb-2 text-green-500" size={32}/><h3 className="font-semibold">Product Labels</h3></div>
-                    <div className="p-4 rounded-lg bg-slate-50"><BookUser className="mx-auto mb-2 text-purple-500" size={32}/><h3 className="font-semibold">Business Cards</h3></div>
-                    <div className="p-4 rounded-lg bg-slate-50"><Smartphone className="mx-auto mb-2 text-red-500" size={32}/><h3 className="font-semibold">App Downloads</h3></div>
+                    <div className="p-4 rounded-lg bg-slate-50">
+                        <Wifi className="mx-auto mb-2 text-blue-500" size={32} alt="Wi-Fi sharing icon" />
+                        <h3 className="font-semibold">Share Wi-Fi Networks</h3>
+                        <p className="text-sm text-gray-600 mt-2">Create a QR code for Wi-Fi credentials to let guests connect easily without typing passwords.</p>
+                    </div>
+                    <div className="p-4 rounded-lg bg-slate-50">
+                        <ShoppingCart className="mx-auto mb-2 text-green-500" size={32} alt="Product labels icon" />
+                        <h3 className="font-semibold">Product Labels</h3>
+                        <p className="text-sm text-gray-600 mt-2">Add QR codes to products linking to details, reviews, or purchase pages for better customer engagement.</p>
+                    </div>
+                    <div className="p-4 rounded-lg bg-slate-50">
+                        <BookUser className="mx-auto mb-2 text-purple-500" size={32} alt="Business cards icon" />
+                        <h3 className="font-semibold">Business Cards</h3>
+                        <p className="text-sm text-gray-600 mt-2">Generate vCard QR codes for contact info, making networking seamless and digital.</p>
+                    </div>
+                    <div className="p-4 rounded-lg bg-slate-50">
+                        <Smartphone className="mx-auto mb-2 text-red-500" size={32} alt="App downloads icon" />
+                        <h3 className="font-semibold">App Downloads</h3>
+                        <p className="text-sm text-gray-600 mt-2">Link directly to app stores with a custom QR code for quick mobile downloads.</p>
+                    </div>
                  </div>
             </section>
 
+            {/* --- NEW: QR Code API Section --- */}
             <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
-                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
+                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">QR Code Generation API</h2>
+                <p className="text-gray-600 mb-4">Integrate our free QR code API into your apps or websites. Use GET requests like <code>/api/qr?value=your-url&size=256&fgColor=%23000000</code> to generate custom QR codes programmatically.</p>
+                <p className="text-gray-600">Perfect for developers needing a reliable, free QR code generator API with logo support. Check the GitHub repo for docs.</p>
+            </section>
+
+            {/* --- UPDATED: Frequently Asked Questions with More Entries --- */}
+            <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
+                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Frequently Asked Questions About QR Code Generators</h2>
                 <div className="space-y-6">
                     <div>
                         <h3 className="font-semibold text-lg">Do these QR codes expire?</h3>
@@ -238,7 +281,35 @@ export default function Home() {
                         <h3 className="font-semibold text-lg">Is this service completely free?</h3>
                         <p className="text-gray-600">Yes. This QR code generator is a free tool with no restrictions, subscriptions, or hidden costs. You can create and download as many codes as you need.</p>
                     </div>
+                    <div>
+                        <h3 className="font-semibold text-lg">How do I add a logo to my QR code?</h3>
+                        <p className="text-gray-600">Our free custom QR code maker automatically adds a branded logo in the center. For custom logos, contact us or check advanced tools.</p>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg">What is the best size for a QR code?</h3>
+                        <p className="text-gray-600">We recommend at least 256px for print. Larger sizes (up to 1024px) ensure better scannability from distances.</p>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg">Can I create QR codes for events or payments?</h3>
+                        <p className="text-gray-600">Yes! Use our tool to generate QR codes for event registrations, PayPal links, or cryptocurrency wallets.</p>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold text-lg">Is this QR code generator secure?</h3>
+                        <p className="text-gray-600">Absolutely. All generation happens client-side or via our secure API—no data is stored.</p>
+                    </div>
                 </div>
+            </section>
+
+            {/* --- NEW: Tips Section --- */}
+            <section className="mt-12 bg-white shadow-xl rounded-3xl p-10 w-full max-w-4xl border border-gray-100">
+                <h2 className="text-2xl font-bold text-center mb-8 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">Tips for Creating Effective QR Codes</h2>
+                <ul className="space-y-4 text-gray-600">
+                    <li><strong>Test Scans:</strong> Always scan your QR code on multiple devices before printing.</li>
+                    <li><strong>Contrast Colors:</strong> Use high-contrast foreground/background for easy scanning.</li>
+                    <li><strong>Add Calls-to-Action:</strong> Print "Scan Me" next to your QR code to boost engagement.</li>
+                    <li><strong>Optimize for Mobile:</strong> Ensure linked content is mobile-friendly.</li>
+                    <li><strong>Use Long-Tail Links:</strong> Shorten complex URLs for cleaner codes.</li>
+                </ul>
             </section>
 
             <footer className="mt-12 text-center text-sm text-gray-500 flex items-center space-x-2">
@@ -246,7 +317,7 @@ export default function Home() {
                 <a href="https://pantaleone.net" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Pantaleone.net</a>
                 <span>•</span>
                 <a href="https://github.com/pantaleone-ai/qrgen-main" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-800 transition-colors">
-                    <Github className="w-5 h-5"/>
+                    <Github className="w-5 h-5" alt="GitHub repository" />
                 </a>
             </footer>
         </main>

@@ -1,6 +1,7 @@
 import QRCode from 'qrcode';
 import { createCanvas } from 'canvas';
 
+// 1. Fixed the import error - Request is global in Next.js
 const normalizeUrl = (input: string | null): string => {
   if (!input) return '';
   if (/^[\w-]+(\.[\w-]+)+/.test(input) && !/^https?:\/\//i.test(input)) {
@@ -23,11 +24,15 @@ const drawRoundedRect = (ctx: any, x: number, y: number, width: number, height: 
   ctx.closePath();
 };
 
+/**
+ * FIXED: This function now draws the "P" manually using shapes 
+ * so it doesn't depend on server fonts.
+ */
 const drawLogo = (ctx: any, centerX: number, centerY: number, logoSize: number) => {
-  const padding = logoSize * 0.12; // Slightly increased for visibility
+  const padding = logoSize * 0.12;
   const borderRadius = logoSize * 0.25;
 
-  // 1. Draw the white outer border (The "Glow/Stroke" effect)
+  // 1. Draw White Outer Border (The Stroke)
   ctx.strokeStyle = '#ffffff';
   ctx.lineWidth = padding;
   drawRoundedRect(
@@ -40,20 +45,44 @@ const drawLogo = (ctx: any, centerX: number, centerY: number, logoSize: number) 
   );
   ctx.stroke();
 
-  // 2. Draw the black background box
+  // 2. Draw Black Box
   ctx.fillStyle = '#000000';
   drawRoundedRect(ctx, centerX - logoSize / 2, centerY - logoSize / 2, logoSize, logoSize, borderRadius);
   ctx.fill();
 
-  // 3. Draw the "P" Text
-  ctx.fillStyle = '#ffffff';
-  // Use sans-serif for better cross-platform compatibility on servers
-  ctx.font = `bold ${Math.floor(logoSize * 0.7)}px sans-serif`; 
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
+  // 3. Draw the "P" using paths (No font required)
+  const pSize = logoSize * 0.55;
+  const pX = centerX - pSize * 0.35; // Position the stem
+  const pY = centerY - pSize * 0.5;
   
-  // Slight Y offset adjustment to visually center the "P"
-  ctx.fillText('P', centerX, centerY);
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  
+  // Stem of the P
+  ctx.fillRect(pX, pY, pSize * 0.2, pSize);
+  
+  // Loop of the P
+  const loopWidth = pSize * 0.5;
+  const loopHeight = pSize * 0.55;
+  const loopX = pX + pSize * 0.2;
+  const loopY = pY;
+  
+  // Outer part of loop
+  drawRoundedRect(ctx, loopX - 2, loopY, loopWidth, loopHeight, loopHeight / 2);
+  ctx.fill();
+  
+  // Cutout for the loop (making it look like a "P")
+  ctx.fillStyle = '#000000';
+  const innerPad = pSize * 0.15;
+  drawRoundedRect(
+    ctx, 
+    loopX, 
+    loopY + innerPad, 
+    loopWidth - innerPad, 
+    loopHeight - (innerPad * 2), 
+    (loopHeight - (innerPad * 2)) / 2
+  );
+  ctx.fill();
 };
 
 export async function GET(request: Request) {
@@ -63,9 +92,7 @@ export async function GET(request: Request) {
   const fgColor = searchParams.get('fgColor') || '#000000';
   const bgColor = searchParams.get('bgColor') || '#ffffff';
 
-  if (!value) {
-    return new Response('Missing "value" parameter', { status: 400 });
-  }
+  if (!value) return new Response('Missing "value"', { status: 400 });
 
   value = normalizeUrl(value);
   let size = parseInt(sizeParam || '256', 10);
@@ -74,15 +101,17 @@ export async function GET(request: Request) {
   const canvas = createCanvas(size, size);
   const ctx = canvas.getContext('2d');
 
+  // Fill Background
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, size, size);
 
+  // Generate QR
   const margin = size * 0.05;
   const qrSize = size - margin * 2;
   const qrCanvas = createCanvas(qrSize, qrSize);
   
   await QRCode.toCanvas(qrCanvas, value, {
-    errorCorrectionLevel: 'H', // High correction is vital for logo overlays
+    errorCorrectionLevel: 'H',
     color: { dark: fgColor, light: bgColor },
     margin: 0,
     width: qrSize,
@@ -90,18 +119,15 @@ export async function GET(request: Request) {
 
   ctx.drawImage(qrCanvas, margin, margin);
 
-  const centerX = size / 2;
-  const centerY = size / 2;
-  const logoSize = size * 0.22;
-  
-  drawLogo(ctx, centerX, centerY, logoSize);
+  // Overlay Logo
+  drawLogo(ctx, size / 2, size / 2, size * 0.22);
 
   const buffer = canvas.toBuffer('image/png');
 
+  // 2. Fixed Type error - casting to any
   return new Response(buffer as any, {
     headers: {
       'Content-Type': 'image/png',
-      'Content-Disposition': 'inline; filename="qr-code.png"',
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
