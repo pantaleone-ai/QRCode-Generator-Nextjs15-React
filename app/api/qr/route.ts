@@ -1,7 +1,6 @@
 import QRCode from 'qrcode';
 import { createCanvas } from 'canvas';
 
-// 1. Fixed the import error - Request is global in Next.js
 const normalizeUrl = (input: string | null): string => {
   if (!input) return '';
   if (/^[\w-]+(\.[\w-]+)+/.test(input) && !/^https?:\/\//i.test(input)) {
@@ -24,64 +23,49 @@ const drawRoundedRect = (ctx: any, x: number, y: number, width: number, height: 
   ctx.closePath();
 };
 
-/**
- * FIXED: This function now draws the "P" manually using shapes 
- * so it doesn't depend on server fonts.
- */
 const drawLogo = (ctx: any, centerX: number, centerY: number, logoSize: number) => {
-  const padding = logoSize * 0.12;
+  const padding = logoSize * 0.15; // Thick white border as seen in your image
   const borderRadius = logoSize * 0.25;
 
-  // 1. Draw White Outer Border (The Stroke)
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = padding;
+  // 1. White Background Border
+  ctx.fillStyle = '#ffffff';
   drawRoundedRect(
     ctx, 
-    centerX - logoSize / 2 - padding / 2, 
-    centerY - logoSize / 2 - padding / 2, 
+    centerX - (logoSize + padding) / 2, 
+    centerY - (logoSize + padding) / 2, 
     logoSize + padding, 
     logoSize + padding, 
     borderRadius + padding / 2
   );
-  ctx.stroke();
+  ctx.fill();
 
-  // 2. Draw Black Box
+  // 2. Black Rounded Square
   ctx.fillStyle = '#000000';
   drawRoundedRect(ctx, centerX - logoSize / 2, centerY - logoSize / 2, logoSize, logoSize, borderRadius);
   ctx.fill();
 
-  // 3. Draw the "P" using paths (No font required)
-  const pSize = logoSize * 0.55;
-  const pX = centerX - pSize * 0.35; // Position the stem
-  const pY = centerY - pSize * 0.5;
-  
+  // 3. Draw the "P" using vector paths to match the reference image exactly
   ctx.fillStyle = '#ffffff';
+  
+  const pWidth = logoSize * 0.5;
+  const pHeight = logoSize * 0.6;
+  const stemWidth = pWidth * 0.35;
+  const startX = centerX - pWidth / 2;
+  const startY = centerY - pHeight / 2;
+
   ctx.beginPath();
+  // Vertical Stem
+  ctx.rect(startX, startY, stemWidth, pHeight);
   
-  // Stem of the P
-  ctx.fillRect(pX, pY, pSize * 0.2, pSize);
+  // Top horizontal bar of loop
+  ctx.rect(startX + stemWidth, startY, pWidth - stemWidth, stemWidth);
   
-  // Loop of the P
-  const loopWidth = pSize * 0.5;
-  const loopHeight = pSize * 0.55;
-  const loopX = pX + pSize * 0.2;
-  const loopY = pY;
+  // Bottom horizontal bar of loop
+  ctx.rect(startX + stemWidth, startY + (pHeight * 0.5) - (stemWidth / 2), pWidth - stemWidth, stemWidth);
   
-  // Outer part of loop
-  drawRoundedRect(ctx, loopX - 2, loopY, loopWidth, loopHeight, loopHeight / 2);
-  ctx.fill();
+  // Right vertical bar of loop (slightly rounded feel)
+  ctx.rect(startX + pWidth - stemWidth, startY, stemWidth, (pHeight * 0.5) + (stemWidth / 2));
   
-  // Cutout for the loop (making it look like a "P")
-  ctx.fillStyle = '#000000';
-  const innerPad = pSize * 0.15;
-  drawRoundedRect(
-    ctx, 
-    loopX, 
-    loopY + innerPad, 
-    loopWidth - innerPad, 
-    loopHeight - (innerPad * 2), 
-    (loopHeight - (innerPad * 2)) / 2
-  );
   ctx.fill();
 };
 
@@ -101,11 +85,11 @@ export async function GET(request: Request) {
   const canvas = createCanvas(size, size);
   const ctx = canvas.getContext('2d');
 
-  // Fill Background
+  // Background
   ctx.fillStyle = bgColor;
   ctx.fillRect(0, 0, size, size);
 
-  // Generate QR
+  // QR Generation
   const margin = size * 0.05;
   const qrSize = size - margin * 2;
   const qrCanvas = createCanvas(qrSize, qrSize);
@@ -119,16 +103,16 @@ export async function GET(request: Request) {
 
   ctx.drawImage(qrCanvas, margin, margin);
 
-  // Overlay Logo
+  // Logo Overlay
   drawLogo(ctx, size / 2, size / 2, size * 0.22);
 
+  // Convert to Buffer and return with proper Type casting for TS
   const buffer = canvas.toBuffer('image/png');
 
-  // 2. Fixed Type error - casting to any
   return new Response(buffer as any, {
     headers: {
       'Content-Type': 'image/png',
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Content-Disposition': 'inline; filename="qr-code.png"',
     },
   });
 }
