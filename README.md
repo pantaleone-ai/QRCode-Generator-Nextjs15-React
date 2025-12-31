@@ -6,7 +6,7 @@
 
 A feature-rich, high-performance QR code generator built with the latest web technologies. This application allows users to create, customize, and download high-resolution QR codes with a custom logo overlay, colors, and high error correction for maximum scannability.
 
-### [➡️ View the Live Demo](https://qr-generator-pantaleone.vercel.app/)
+### [➡️ View the Live Demo](https://genqrai.vercel.app/)
 
 ---
 
